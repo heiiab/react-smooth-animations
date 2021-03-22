@@ -1,15 +1,16 @@
-import React from "react";
+import { TimingFunction } from './types';
 
 export interface SharedProps {
   forward: boolean;
   duration?: number;
-  timingFunction?: string;
+  timingFunction?: TimingFunction;
   delay?: number;
   children: React.ReactElement;
 }
 
-export interface AnimateProps extends SharedProps {
+export interface TransitionProps {
   from: React.CSSProperties;
   to: React.CSSProperties;
-  property?: string;
 }
+
+export interface AnimateProps extends SharedProps, TransitionProps {}

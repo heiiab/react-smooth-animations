@@ -5,22 +5,23 @@ const Base: React.FC<AnimateProps> = ({
   forward,
   from,
   to,
-  property = 'all',
   duration = 0.5,
-  timingFunction = 'linear',
+  timingFunction = 'ease',
   delay = 0,
   children,
 }) => {
   const startingStyle = children?.props?.style || {};
   const additionalStyle = forward ? to : from;
   const transitionStyle = {
-    transition: `${property} ${duration}s ${timingFunction} ${delay}s`,
+    transition: `all ${duration}s ${timingFunction} ${delay}s`,
   };
   const styles = {
     ...startingStyle,
     ...additionalStyle,
     ...transitionStyle,
   };
+
+  console.log('entered animation <---');
 
   return React.cloneElement(
     React.Children.only(children),

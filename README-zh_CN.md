@@ -1,22 +1,22 @@
 # react-smooth-animations
 
-✨ A collection of animations for React.
+✨ 一组用于 React 的动画
 
-English | [简体中文](./README-zh_CN.md)
+[English](./README.md) | 简体中文
 
-## Install
+## 安装
 
 ```bash
 npm install react-smooth-animations
 ```
 
-or
+或者
 
 ```bash
 yarn add react-smooth-animations
 ```
 
-## Usage
+## 示例
 
 ```jsx
 import React from 'react';
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={() => setForward(!forward)}>Toggle</button>
+      <button onClick={() => setForward(!forward)}>切换</button>
       <Animate
         forward={forward}
         from={{ color: 'blue' }}
@@ -35,7 +35,7 @@ const App = () => {
         duration={0.2}
         timingFunction="ease-in"
       >
-        <span>Custom animation</span>
+        <span>自定义动画</span>
       </Animate>
     </div>
   );
@@ -51,22 +51,22 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={() => setForward(!forward)}>Toggle</button>
+      <button onClick={() => setForward(!forward)}>切换</button>
       <Animate.FadeIn
         forward={forward}
         duration={0.2}
         timingFunction="ease-in"
       >
-        <span>Fade in animation</span>
+        <span>渐入动画</span>
       </Animate.FadeIn>
     </div>
   );
 }
 ```
 
-## Built-in animations
+## 内置动画
 
-Here is all available animations:
+目前可用的内置动画:
 
 `FadeIn`
 `FadeInUp`

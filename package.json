@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/heiiab/react-smooth-animations#readme",
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "devDependencies": {
     "@babel/cli": "^7.13.10",

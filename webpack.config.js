@@ -28,6 +28,11 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
 
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
+
   module: {
     rules: [
       {

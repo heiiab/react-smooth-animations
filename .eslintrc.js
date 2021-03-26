@@ -16,7 +16,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   settings: {
     react: {
-      version: 'detect',
+      version: '>=16.8.0',
     },
   },
   plugins: ['react', 'babel', 'jest', '@typescript-eslint', 'react-hooks', 'markdown'],

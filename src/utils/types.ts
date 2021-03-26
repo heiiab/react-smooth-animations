@@ -1,7 +1,6 @@
 export type LiteralUnion<T extends U, U = string> = T | (U & {});
 
 export type TimingFunction = LiteralUnion<
-  '-moz-initial' |
   'linear' |
   'ease' |
   'ease-in' |
@@ -9,9 +8,13 @@ export type TimingFunction = LiteralUnion<
   'ease-in-out' |
   'step-start' |
   'step-end' |
-  'initial' |
+  'start' |
+  'end' |
+  'jump-start' |
+  'jump-end' |
+  'jump-none' |
+  'jump-both' |
   'inherit' |
-  'unset' |
-  'revert'
+  'initial' |
+  'unset'
 >;
-

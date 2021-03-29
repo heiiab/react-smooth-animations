@@ -30,12 +30,28 @@ const App = () => {
       <button onClick={() => setForward(!forward)}>切换</button>
       <Animate
         forward={forward}
-        from={{ color: 'blue' }}
-        to={{ color: 'red' }}
-        duration={0.2}
-        timingFunction="ease-in"
+        from={{ opacity: 0, transform: 'translateY(-20px) rotate(-45deg)' }}
+        intermediate={{
+          30: {
+            opacity: 1
+          },
+          /**
+           * 60: { ... },
+           * 70: { ... }
+           */
+        }}
+        /**
+         * 或者
+         * intermediate={[
+         *  { percentage: 30, opacity: 1 },
+         *  { percentage: 60, ... }
+         * ]}
+        */
+        to={{ opacity: 0, transform: 'translateY(10px) rotate(-45deg)' }}
+        duration={1.5}
+        timingFunction="ease-in-out"
       >
-        <span>自定义动画</span>
+        <span style={{ display: 'inline-block' }}>自定义动画</span>
       </Animate>
     </div>
   );
@@ -54,8 +70,8 @@ const App = () => {
       <button onClick={() => setForward(!forward)}>切换</button>
       <Animate.FadeIn
         forward={forward}
-        duration={0.2}
-        timingFunction="ease-in"
+        duration={0.3}
+        timingFunction="ease-out"
       >
         <span>渐入动画</span>
       </Animate.FadeIn>

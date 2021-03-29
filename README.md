@@ -30,12 +30,28 @@ const App = () => {
       <button onClick={() => setForward(!forward)}>Toggle</button>
       <Animate
         forward={forward}
-        from={{ color: 'blue' }}
-        to={{ color: 'red' }}
-        duration={0.2}
-        timingFunction="ease-in"
+        from={{ opacity: 0, transform: 'translateY(-20px) rotate(-45deg)' }}
+        intermediate={{
+          30: {
+            opacity: 1
+          },
+          /**
+           * 60: { ... },
+           * 70: { ... }
+           */
+        }}
+        /**
+         * or
+         * intermediate={[
+         *  { percentage: 30, opacity: 1 },
+         *  { percentage: 60, ... }
+         * ]}
+        */
+        to={{ opacity: 0, transform: 'translateY(10px) rotate(-45deg)' }}
+        duration={1.5}
+        timingFunction="ease-in-out"
       >
-        <span>Custom animation</span>
+        <span style={{ display: 'inline-block' }}>Custom animation</span>
       </Animate>
     </div>
   );
@@ -54,8 +70,8 @@ const App = () => {
       <button onClick={() => setForward(!forward)}>Toggle</button>
       <Animate.FadeIn
         forward={forward}
-        duration={0.2}
-        timingFunction="ease-in"
+        duration={0.3}
+        timingFunction="ease-out"
       >
         <span>Fade in animation</span>
       </Animate.FadeIn>

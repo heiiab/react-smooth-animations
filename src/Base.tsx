@@ -2,69 +2,79 @@ import * as React from 'react';
 import warning from 'warning';
 import { AnimateProps } from './utils/interfaces';
 import uuid from './utils/uuid';
+import StyleSheets from './utils/StyleSheets';
+import { styleToString, intermediateParser } from './utils';
+import useWillMount from './utils/useWillMount';
 
 const Base: React.FC<AnimateProps> = ({
   forward,
   from,
   intermediate,
   to,
-  keyframesName = 'customize',
+  keyframesName = 'rsa',
   duration = 0.5,
   timingFunction = 'ease',
   delay = 0,
+  infinite = false,
+  animationOnMount = false,
   children,
 }) => {
   const childRef = React.useRef<any>();
   const uuidRef = React.useRef<string>(uuid());
+  const mounted = React.useRef<boolean>(false);
   const keyframesNameRef = React.useRef<string>(keyframesName);
-  // override the "display" value of child
-  const childDisplay = React.useRef<string>('');
   const startingStyle = children?.props?.style || {};
   const enterAnimationName = `${keyframesNameRef.current}-animation-enter-${uuidRef.current}`;
   const leaveAnimationName = `${keyframesNameRef.current}-animation-leave-${uuidRef.current}`;
-  const [additionalStyle, setAdditionalStyle] = React.useState<React.CSSProperties>();
+  const animationName = forward ? enterAnimationName : leaveAnimationName;
+
+  if (!animationOnMount && !infinite) {
+    duration = mounted.current ? duration : 0;
+    delay = mounted.current ? delay : 0;
+  }
+
   const styles = {
     ...startingStyle,
-    ...additionalStyle,
-    ...(childDisplay.current ? { display: childDisplay.current } : {}),
+    animation: `${duration}s ${timingFunction} ${delay}s ${infinite ? 'infinite' : ''} forwards ${animationName} `
   };
 
-  React.useEffect(() => {
-    setAdditionalStyle({
-      animation: `${forward ? enterAnimationName : leaveAnimationName} ${duration}s ${timingFunction} ${delay}s forwards`
-    });
-  }, [forward]);
+  useWillMount(() => {
+    const styleSheet = StyleSheets.getInstance();
+    const fromStylesString = styleToString(from);
+    const toStylesString = styleToString(to);
+    let intermediateEnterString = '';
+    let intermediateLeaveString = '';
 
-  React.useEffect(() => {
-    if (getComputedStyle(childRef.current).display === 'inline') {
-      childDisplay.current = 'inline-block';
-      warning(
-        false,
-        '[react-smooth-animations] will use transform to control element styles, but transform doesn\'t work on most inline elements, see (https://drafts.csswg.org/css-transforms-1/#transformable-element) for more details. You should use other types of element instead.'
-      );
+    if (intermediate) {
+      [intermediateEnterString, intermediateLeaveString] = intermediateParser(intermediate);
     }
-  }, []);
-
-  React.useEffect(() => {
-    const fromStylesString = Object.entries(from).map(([key, value]) => `${key}:${value}`).join(';');
-    const toStylesString = Object.entries(to).map(([key, value]) => `${key}:${value}`).join(';');
 
     const enterKeyframes = `
       @keyframes ${enterAnimationName} {
         from { ${fromStylesString} }
+        ${intermediateEnterString}
         to { ${toStylesString} }
       }
     `;
     const leaveKeyframes = `
       @keyframes ${leaveAnimationName} {
         from { ${toStylesString} }
+        ${intermediateLeaveString}
         to { ${fromStylesString} }
       }
     `;
-    const style = document.createElement('style');
 
-    style.innerHTML = enterKeyframes + leaveKeyframes;
-    document.getElementsByTagName('head')[0].appendChild(style);
+    styleSheet.insertRule(enterKeyframes);
+    styleSheet.insertRule(leaveKeyframes);
+  });
+
+  React.useEffect(() => {
+    getComputedStyle(childRef.current).display === 'inline' &&
+      warning(
+        false,
+        '[react-smooth-animations] will use transform to control element styles, but transform doesn\'t work on most inline elements, see (https://drafts.csswg.org/css-transforms-1/#transformable-element) for more details. You should use other types of element instead.'
+      );
+    mounted.current = true;
   }, []);
 
   return React.cloneElement(

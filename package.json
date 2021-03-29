@@ -1,6 +1,6 @@
 {
   "name": "react-smooth-animations",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A collection of animations for React",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

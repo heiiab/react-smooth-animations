@@ -1,4 +1,4 @@
 import Animate from './Animate';
 
-export type { AnimateProps, SharedProps } from './utils/interfaces';
+export type { AnimateProps } from './utils/interfaces';
 export default Animate;

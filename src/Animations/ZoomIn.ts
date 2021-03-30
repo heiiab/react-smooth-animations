@@ -1,15 +1,13 @@
 import apply from '../utils/apply';
 
-export default apply(
-  {
-    from: {
-      opacity: 0,
-      transform: 'scale(0)'
-    },
-    to: {
-      opacity: 1,
-      transform: 'scale(1)'
-    }
+export default apply({
+  from: {
+    opacity: 0,
+    transform: 'scale(0)'
   },
-  'zoom-in'
-);
+  to: {
+    opacity: 1,
+    transform: 'scale(1)'
+  },
+  keyframesName: 'zoom-in',
+});

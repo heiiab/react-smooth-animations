@@ -1,15 +1,13 @@
 import apply from '../utils/apply';
 
-export default apply(
-  {
-    from: {
-      opacity: 1,
-      transform: 'translateX(0)'
-    },
-    to: {
-      opacity: 0,
-      transform: 'translateX(100%)'
-    }
+export default apply({
+  from: {
+    opacity: 1,
+    transform: 'translateX(0)'
   },
-  'fade-out-right'
-);
+  to: {
+    opacity: 0,
+    transform: 'translateX(100%)'
+  },
+  keyframesName: 'fade-out-right'
+});

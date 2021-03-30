@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Base from '../Base';
-import { StateProps, SharedProps } from './interfaces';
+import { AnimateSharedProps, ApplyProps } from './interfaces';
 
-export default (state: StateProps, keyframesName: string) => {
-  const Component: React.FC<SharedProps> = ({ children, ...restProps }) => {
+export default (options: ApplyProps) => {
+  const Component: React.FC<AnimateSharedProps> = ({ children, ...restProps }) => {
     return (
-      <Base {...restProps} {...state} keyframesName={keyframesName}>
+      <Base {...options} {...restProps}>
         {children}
       </Base>
     );
